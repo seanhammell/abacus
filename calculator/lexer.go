@@ -22,25 +22,30 @@ func NewLexer(input string) *Lexer {
 
 func (lexer *Lexer) NextToken() Token {
 	var token Token
-
-	token.Literal = string(lexer.current)
-	switch lexer.current {
-	case '+':
-		token.Type = PLUS
-	case '-':
-		token.Type = MINUS
-	case 'x':
-		token.Type = TIMES
-	case '/':
-		token.Type = SLASH
-	default:
-		if isDigit(lexer.current) {
-			token.Type = OPERAND
-			for isDigit(lexer.peek()) {
+	for {
+		switch lexer.current {
+		case '+':
+			token.Type = PLUS
+		case '-':
+			token.Type = MINUS
+		case 'x':
+			token.Type = TIMES
+		case '/':
+			token.Type = SLASH
+		default:
+			if isDigit(lexer.current) {
+				token.Type = OPERAND
+				for isDigit(lexer.peek()) {
+					token.Literal += string(lexer.current)
+					lexer.read()
+				}
+			} else {
 				lexer.read()
-				token.Literal += string(lexer.current)
+				continue
 			}
 		}
+		token.Literal += string(lexer.current)
+		break
 	}
 
 	lexer.read()
