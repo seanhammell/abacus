@@ -1,5 +1,7 @@
 package calculator
 
+import "strings"
+
 func isDigit(b byte) bool {
 	return b >= '0' && b <= '9'
 }
@@ -13,6 +15,7 @@ type Lexer struct {
 
 func NewLexer(input string) *Lexer {
 	lexer := &Lexer{input: input}
+	lexer.input = strings.ReplaceAll(lexer.input, " ", "")
 	lexer.read()
 	return lexer
 }

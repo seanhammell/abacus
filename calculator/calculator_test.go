@@ -5,7 +5,7 @@ import (
 )
 
 func TestTokens(t *testing.T) {
-	input := "01+23-45x67/89"
+	input := "01 + 23 - 45 x 67 / 89"
 	tests := []struct {
 		tokenType    string
 		tokenLiteral string
