@@ -20,6 +20,7 @@ func NewLexer(input string) *Lexer {
 func (lexer *Lexer) NextToken() Token {
 	var token Token
 
+	token.Literal = string(lexer.current)
 	switch lexer.current {
 	case '+':
 		token.Type = PLUS
@@ -32,12 +33,23 @@ func (lexer *Lexer) NextToken() Token {
 	default:
 		if isDigit(lexer.current) {
 			token.Type = OPERAND
+			for isDigit(lexer.peek()) {
+				lexer.read()
+				token.Literal += string(lexer.current)
+			}
 		}
 	}
 
-	token.Literal = string(lexer.current)
 	lexer.read()
 	return token
+}
+
+func (lexer *Lexer) peek() byte {
+	if lexer.next >= len(lexer.input) {
+		return 0
+	}
+
+	return lexer.input[lexer.next]
 }
 
 func (lexer *Lexer) read() {

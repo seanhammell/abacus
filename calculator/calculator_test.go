@@ -5,16 +5,20 @@ import (
 )
 
 func TestTokens(t *testing.T) {
-	input := "0+-x/"
+	input := "01+23-45x67/89"
 	tests := []struct {
 		tokenType    string
 		tokenLiteral string
 	}{
-		{OPERAND, "0"},
+		{OPERAND, "01"},
 		{PLUS, "+"},
+		{OPERAND, "23"},
 		{MINUS, "-"},
+		{OPERAND, "45"},
 		{TIMES, "x"},
+		{OPERAND, "67"},
 		{SLASH, "/"},
+		{OPERAND, "89"},
 	}
 
 	lexer := NewLexer(input)
