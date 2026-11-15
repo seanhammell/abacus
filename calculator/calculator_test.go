@@ -21,6 +21,7 @@ func TestTokens(t *testing.T) {
 		{OPERAND, "67"},
 		{SLASH, "/"},
 		{OPERAND, "89"},
+		{EOF, ""},
 	}
 
 	lexer := NewLexer(input)

@@ -1,10 +1,8 @@
 package calculator
 
-import "strings"
-
-func isDigit(b byte) bool {
-	return b >= '0' && b <= '9'
-}
+import (
+	"strings"
+)
 
 type Lexer struct {
 	input    string
@@ -22,30 +20,41 @@ func NewLexer(input string) *Lexer {
 
 func (lexer *Lexer) NextToken() Token {
 	var token Token
-	token.Literal = string(lexer.current)
+
 	switch lexer.current {
 	case '+':
-		token.Type = PLUS
+		token = newToken(PLUS, lexer.current)
 	case '-':
-		token.Type = MINUS
+		token = newToken(MINUS, lexer.current)
 	case 'x':
-		token.Type = TIMES
+		token = newToken(TIMES, lexer.current)
 	case '/':
-		token.Type = SLASH
+		token = newToken(SLASH, lexer.current)
+	case 0:
+		token.Type = EOF
+		token.Literal = ""
 	default:
 		if isDigit(lexer.current) {
-			token.Type = OPERAND
+			token = newToken(OPERAND, lexer.current)
 			for isDigit(lexer.peek()) {
 				lexer.read()
 				token.Literal += string(lexer.current)
 			}
 		} else {
-			token.Type = INVALID
+			token = newToken(INVALID, lexer.current)
 		}
 	}
 
 	lexer.read()
 	return token
+}
+
+func isDigit(b byte) bool {
+	return b >= '0' && b <= '9'
+}
+
+func newToken(tokenType string, tokenLiteral byte) Token {
+	return Token{Type: tokenType, Literal: string(tokenLiteral)}
 }
 
 func (lexer *Lexer) peek() byte {

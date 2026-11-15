@@ -14,4 +14,5 @@ const (
 	SLASH = "DIVIDE"
 
 	INVALID = "INVALID"
+	EOF     = "EOF"
 )
