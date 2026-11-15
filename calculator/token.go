@@ -12,4 +12,6 @@ const (
 	MINUS = "SUBTRACT"
 	TIMES = "MULTIPLY"
 	SLASH = "DIVIDE"
+
+	INVALID = "INVALID"
 )

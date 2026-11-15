@@ -5,13 +5,15 @@ import (
 )
 
 func TestTokens(t *testing.T) {
-	input := "abc 01 + !@#$% 23 - 45 x 67 / 89"
+	input := "a 01 + ! 23 - 45 x 67 / 89"
 	tests := []struct {
 		tokenType    string
 		tokenLiteral string
 	}{
+		{INVALID, "a"},
 		{OPERAND, "01"},
 		{PLUS, "+"},
+		{INVALID, "!"},
 		{OPERAND, "23"},
 		{MINUS, "-"},
 		{OPERAND, "45"},
