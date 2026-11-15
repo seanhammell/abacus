@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"os"
 	"strings"
+
+	"github.com/seanhammell/abacus/calculator"
 )
 
 func main() {
@@ -19,6 +21,10 @@ func main() {
 		if strings.ToLower(input) == "q" {
 			break
 		}
-		fmt.Println(input)
+
+		lexer := calculator.NewLexer(input)
+		for token := lexer.NextToken(); token.Type != calculator.EOF; token = lexer.NextToken() {
+			fmt.Printf("%+v\n", token)
+		}
 	}
 }
