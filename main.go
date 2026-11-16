@@ -22,9 +22,12 @@ func main() {
 			break
 		}
 
+		var tokens []calculator.Token
 		lexer := calculator.NewLexer(input)
 		for token := lexer.NextToken(); token.Type != calculator.EOF; token = lexer.NextToken() {
-			fmt.Printf("%+v\n", token)
+			tokens = append(tokens, token)
 		}
+
+		fmt.Printf("%+v\n", calculator.Parse(tokens))
 	}
 }
