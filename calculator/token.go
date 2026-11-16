@@ -16,3 +16,14 @@ const (
 	INVALID = "INVALID"
 	EOF     = "EOF"
 )
+
+func (token *Token) Precedence() int {
+	switch token.Type {
+	case PLUS, MINUS:
+		return 1
+	case TIMES, SLASH:
+		return 2
+	default:
+		return 0
+	}
+}
